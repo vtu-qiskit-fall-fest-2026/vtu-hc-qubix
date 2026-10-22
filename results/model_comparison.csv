@@ -1,0 +1,4 @@
+Model,Accuracy,Balanced Accuracy,Macro F1,Test Samples
+Classical RBF-SVM,0.5667,0.5163,0.4548,30
+Quantum QSVC,0.5,0.3353,0.3158,30
+Quantum VQC,0.3667,0.3987,0.2598,30
