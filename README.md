@@ -1,312 +1,253 @@
-<div align="center">
+# Q-RESQ — Quantum Machine Learning-Based Disaster Severity Prediction
 
-# Qubix
+**Team:** Qubix
+**Team ID:** VTU-QFF-HC-0177
+**Tier:** Online
+**Event:** VTU-Qiskit Fall Fest 2026 Hackathon
 
-**VTU-QFF-HC-0177** &nbsp;|&nbsp; Tier: **Online**
+Q-RESQ is a research prototype exploring classical and quantum machine-learning techniques for earthquake-related building damage classification. It combines a Streamlit application with experiments using Qiskit's Quantum Support Vector Classifier (QSVC) and Variational Quantum Classifier (VQC).
 
-</div>
+> **Safety notice:** This is an experimental prototype, not a certified structural-safety assessment or an operational emergency-response system. Never use its predictions alone to determine building occupancy, evacuation, or real emergency-resource allocation.
 
----
+## Table of Contents
 
-<div align="center">
+- Problem Statement
+- Proposed Solution
+- Implementation and Architecture
+- Technology Stack
+- Project Structure
+- Dataset Setup
+- Installation and Execution
+- Model Evaluation
+- Limitations and Future Work
+- Team Members
+- Demo and Submission
+- References
 
-| | |
-| :--- | :--- |
-| **Team** | Qubix |
-| **Team ID** | VTU-QFF-HC-0177 |
-| **Tier** | Online |
-| **Repository** | [vtu-hc-qubix](https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-qubix.git) |
-| **Organisation** | [vtu-qiskit-fall-fest-2026](https://github.com/vtu-qiskit-fall-fest-2026) |
-| **Event** | VTU-QFF Hackathon — VTU-Qiskit Fall Fest 2026 |
+## 1. Problem Statement
 
-</div>
+Disaster response requires timely information about the potential damage caused by earthquakes. This project explores how machine-learning models can classify building damage grades using selected building characteristics and how classical and quantum approaches compare on a small experimental dataset.
 
----
+The broader Q-RESQ problem statement focuses on quantum machine learning for disaster severity prediction and intelligent emergency response using environmental, geographical, and population-related information.
 
-## 📌 Table of Contents
+**Current implementation scope:** The prototype predicts earthquake-related building damage grades from four structural features. It does not yet implement regional risk mapping, environmental-data integration, population analysis, or emergency-resource quantity prediction.
 
-- [Team Members](#-team-members-github-ids)
-- [Problem Statement](#-problem-statement)
-- [Proposed Solution](#-proposed-solution)
-- [Approach & Architecture](#-approach--architecture)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [How to Run](#-how-to-run)
-- [How to Push Code](#-how-to-push-code)
-- [Submission Checklist](#-submission-checklist)
-- [Resources](#-resources)
-- [License](#-license)
+## 2. Proposed Solution
 
----
+Q-RESQ provides an interactive web interface where users enter building characteristics and receive a damage-grade prediction from a classical machine-learning model.
 
-## 👥 Team Members (GitHub IDs)
+Alongside the web application, the project includes quantum machine-learning experiments using Qiskit.
 
-> Members are added to this repository as **collaborators** and must accept the
-> GitHub invitation before they can push. Add your GitHub username below.
+Key components:
 
-| # | Name | GitHub Username | Role |
-| :-- | :--- | :--- | :--- |
-| 1 | _Add your name_ | _your-github-username_ | _Team Lead_ |
-| 2 | _Add your name_ | _your-github-username_ | _Developer_ |
-| 3 | _Add your name_ | _your-github-username_ | _Developer_ |
+- Interactive Streamlit prediction interface.
+- Classical RBF Support Vector Machine (SVM).
+- Quantum-kernel QSVC experiment.
+- Variational Quantum Classifier (VQC).
+- CSV-based experiment outputs and model comparison.
 
-<!--
-Optional: add a plain list instead of the table above.
-- @username1
-- @username2
--->
+The quantum experiments are exploratory. The current results do not demonstrate quantum advantage.
 
----
-
-## ❓ Problem Statement
-
-<!--
-State the problem you are solving. Be specific: what is broken or missing,
-who experiences it, and why does it matter. Link to the official problem
-statement from the brief if one applies.
--->
-
-**Problem:** _Describe the problem in 2–3 sentences._
-
-**Why it matters:** _Explain the impact or opportunity._
-
-**Track / Category:** _Online / Offline · Track 1 / Track 2 · <domain>_
-
----
-
-## 💡 Proposed Solution
-
-<!--
-Describe your solution. Keep it concrete: the core idea, the user flow, and
-the quantum/ML technique you are applying.
--->
-
-**Solution:** _In 2–3 sentences, describe what you built._
-
-**Key idea:** _The one-line technical summary of your approach._
-
-**Why this works:** _How your approach addresses the problem statement._
-
----
-
-## 🧩 Approach & Architecture
-
-<!--
-Walk through how it works. A simple pipeline diagram in text or Mermaid is ideal.
--->
+## 3. Implementation and Architecture
 
 ```mermaid
-flowchart LR
-    A[Input Data] --> B[Preprocessing]
-    B --> C[Quantum Circuit / Model]
-    C --> D[Post-processing]
-    D --> E[Output]
+flowchart TD
+    A[Building Dataset] --> B[Match Building IDs and Labels]
+    B --> C[Select Four Numeric Features]
+    C --> D[Preprocessing and Scaling]
+    D --> E[Classical RBF-SVM]
+    D --> F[Quantum Kernel QSVC]
+    D --> G[Variational Quantum Classifier]
+    E --> H[Evaluate Predictions]
+    F --> H
+    G --> H
+    H --> I[Save and Compare Results]
+    C --> J[Streamlit Input Form]
+    J --> K[Damage Grade Prediction]
 ```
 
-1. **Input** — _what data goes in and in what format_
-2. **Preprocessing** — _cleaning, feature extraction, encoding_
-3. **Quantum core** — _the circuit, ansatz, or algorithm used_
-4. **Post-processing** — _decoding, measurement, scoring_
-5. **Output** — _what the user finally gets_
+### Quantum Machine Learning
 
----
+**QSVC**
 
-## 🛠️ Tech Stack
+- Uses Qiskit Machine Learning's `FidelityQuantumKernel`.
+- Uses a four-feature ZZ quantum feature map.
+- Compares quantum-kernel classification with a classical RBF-SVM.
 
-| Layer | Technology |
-| :--- | :--- |
-| Language | Python 3.11+ |
-| Quantum SDK | Qiskit `>=1.0`, Qiskit Aer, Qiskit Runtime |
-| Optimisation | Qiskit Optimization / COBYLA / SPSA |
-| Simulation | AerSimulator (statevector / noisemodel) |
-| Environment | JupyterLab / VS Code, `venv` |
-| Version control | Git + GitHub |
+**VQC**
 
----
+- Uses a four-qubit ZZ feature map.
+- Uses a `RealAmplitudes` variational ansatz.
+- Uses `StatevectorSampler` and the COBYLA optimizer.
+- Evaluates predictions on a small test subset.
 
-## 📁 Project Structure
+**Classical model**
+
+- Uses an RBF-kernel SVM in the Streamlit app.
+- The app trains on a stratified subset of up to 1,200 examples to keep the demonstration lightweight.
+
+## 4. Technology Stack
+
+| Component                  | Technology              |
+| -------------------------- | ----------------------- |
+| Programming language       | Python 3.11+            |
+| Quantum computing          | Qiskit                  |
+| Quantum machine learning   | Qiskit Machine Learning |
+| Classical machine learning | scikit-learn            |
+| Data processing            | NumPy and pandas        |
+| Web interface              | Streamlit               |
+| Results                    | CSV                     |
+| Development                | VS Code / PowerShell    |
+| Version control            | Git and GitHub          |
+
+## 5. Project Structure
 
 ```text
 vtu-hc-qubix/
-├── README.md              # This file
-├── requirements.txt       # Python dependencies
-├── pyproject.toml         # Project metadata (optional)
+├── README.md
+├── requirements.txt
 ├── .gitignore
-├── notebooks/             # Jupyter notebooks for experiments
-│   └── exploration.ipynb
 ├── src/
-│   ├── __init__.py
-│   ├── circuit.py         # Quantum circuit construction
-│   ├── optimizer.py       # Optimization loop
-│   └── main.py            # Entry point
-├── data/                  # Datasets (use Git LFS for large files)
-├── tests/                 # Unit tests
-│   └── test_circuit.py
-└── docs/                  # Notes, diagrams, reports
+│   ├── app.py
+│   ├── baseline.py
+│   ├── compare_models.py
+│   ├── quantum_model.py
+│   └── vqc_model.py
+└── results/
+    ├── model_comparison.csv
+    ├── quantum_comparison.csv
+    └── vqc_comparison.csv
 ```
 
----
+The dataset is not committed to this repository. Follow the instructions below to configure it locally.
 
-## 🚀 How to Run
+## 6. Dataset Setup
+
+The project expects these files:
+
+- `data/train_values.csv`
+- `data/train_labels.csv`
+
+The files must share the `building_id` column. The labels file must contain `damage_grade`.
+
+The expected file format matches the **Richter's Predictor: Modeling Earthquake Damage** dataset, which concerns building damage from the 2015 Gorkha earthquake in Nepal.
+
+Dataset information: [https://www.drivendata.org/competitions/57/nepal-earthquake/](https://www.drivendata.org/competitions/57/nepal-earthquake/)
+
+Obtain the dataset through its official page and follow its data-use terms. Place the required CSV files inside the local `data` directory. The repository's `.gitignore` excludes dataset CSV files, so they will not be included in a normal Git commit.
+
+## 7. Installation and Execution
 
 ### Prerequisites
 
 - Python 3.11 or newer
-- [Git](https://git-scm.com/downloads)
-- A GitHub account (you need collaborator access to this repo)
+- Git
+- The two required dataset CSV files
 
-### 1. Clone the repository
+### Step 1 — Clone the repository
 
-```bash
+```powershell
 git clone https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-qubix.git
 cd vtu-hc-qubix
 ```
 
-### 2. Create a virtual environment
+### Step 2 — Create and activate a virtual environment
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate        # Linux / macOS
-# .venv\Scripts\activate         # Windows (PowerShell)
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
-### 3. Install dependencies
+### Step 3 — Install dependencies
 
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
+```powershell
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-### 4. Run
+### Step 4 — Configure the dataset
 
-```bash
-python -m src.main
+Create the `data` folder if necessary and place `train_values.csv` and `train_labels.csv` inside it.
+
+### Step 5 — Launch the application
+
+```powershell
+python -m streamlit run src/app.py
 ```
 
-Or launch the notebook workflow:
+Open the local URL printed by Streamlit in your browser. Enter the building details and select **Predict Damage Grade**.
 
-```bash
-jupyter lab
+### Optional — Run model experiments
+
+Run these commands from the repository root after installing dependencies and setting up the dataset:
+
+```powershell
+python src/baseline.py
+python src/quantum_model.py
+python src/vqc_model.py
+python src/compare_models.py
 ```
 
-### 5. Run the tests
+Quantum simulations may take longer than the classical application. Running the experiment scripts can overwrite the CSV result files.
 
-```bash
-pytest -q
-```
+## 8. Model Evaluation
+
+The committed `results/model_comparison.csv` contains these results from a 30-sample test set.
+
+| Model             | Accuracy | Balanced Accuracy | Macro F1 | Test Samples |
+| ----------------- | -------: | ----------------: | -------: | -----------: |
+| Classical RBF-SVM |   56.67% |            51.63% |   45.48% |           30 |
+| Quantum QSVC      |   50.00% |            33.53% |   31.58% |           30 |
+| Quantum VQC       |   36.67% |            39.87% |   25.98% |           30 |
+
+These results are preliminary and based on a small test set. They do not establish that quantum models outperform classical models.
+
+The Streamlit application's displayed SVM accuracy uses a separate data split and must not be compared directly with the 30-sample experiment results.
+
+## 9. Limitations and Future Work
+
+### Current limitations
+
+- Only four building characteristics are used in the interactive application.
+- The current model classifies dataset damage grades; it does not certify structural safety.
+- Geographic risk mapping and emergency-resource quantity prediction are not implemented.
+- Quantum models are evaluated on small simulator-based experiments.
+- The dataset must be obtained separately.
+- The results do not demonstrate quantum advantage.
+
+### Future work
+
+- Evaluate all models on a larger, consistently defined test set.
+- Explore additional permitted environmental, geographic, and population-related features.
+- Investigate regional risk visualization using validated data.
+- Explore resource-planning support after suitable validation.
+- Improve automated testing, reproducibility, and model documentation.
+
+## 10. Team Members
+
+| Name                    | GitHub                                                             | Contribution                          |
+| ----------------------- | ------------------------------------------------------------------ | ------------------------------------- |
+| Madhuri Seetha Thondapu | [@madhuriseetha2006-web](https://github.com/madhuriseetha2006-web) | Project development and documentation |
+| Takkellapati Pooja      | Add GitHub username                                                | Add actual contribution               |
+| Rakurthi Harshitha      | Add GitHub username                                                | Add actual contribution               |
+
+
+
+Before final submission, replace the remaining placeholders with the team's confirmed names, GitHub usernames, and contributions. Do not publish guessed details.
+
+## 11. Demo and Submission
+
+- **GitHub repository:** [https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-qubix](https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-qubix)
+- **Demo video:** Add the actual YouTube URL after uploading the final demonstration.
+- **Hackathon submission:** Submit the required PPT and links through the official portal according to the event guidelines.
+
+## 12. References
+
+- [Qiskit documentation](https://docs.quantum.ibm.com/)
+- [Qiskit Machine Learning documentation](https://qiskit-community.github.io/qiskit-machine-learning/)
+- [Streamlit documentation](https://docs.streamlit.io/)
+- [Richter's Predictor: Modeling Earthquake Damage](https://www.drivendata.org/competitions/57/nepal-earthquake/)
 
 ---
 
-## 🔁 How to Push Code
-
-> Full walkthrough: **[Git & Collaboration Handbook](../vtu-hc-guide-git-and-collaboration)** — collaboration
-> workflow, branches, pull requests, reviews and conflict resolution.
-
-### Configure Git (first time only)
-
-```bash
-git config --global user.name  "Your Name"
-git config --global user.email "you@example.com"
-```
-
-### Everyday workflow
-
-```bash
-# 1. Get the latest changes
-git checkout main
-git pull origin main
-
-# 2. Create a branch for your work
-git checkout -b feature/my-task
-
-# 3. Commit your work
-git add .
-git commit -m "feat: add variational circuit for the search problem"
-
-# 4. Push the branch
-git push -u origin feature/my-task
-
-# 5. Open a Pull Request on GitHub and request a review
-#    https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-qubix/compare/main...feature/my-task
-
-# 6. After approval, merge into main
-git checkout main
-git pull origin main
-git branch -d feature/my-task
-```
-
-### Commit message convention
-
-| Prefix | Meaning |
-| :--- | :--- |
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `docs:` | Documentation only |
-| `test:` | Adding or fixing tests |
-| `refactor:` | Code restructure, no behaviour change |
-| `chore:` | Build/config/dependency changes |
-
-### Useful commands
-
-```bash
-git status              # what changed
-git log --oneline -10   # recent commits
-git diff                # review changes before committing
-git stash               # shelve changes temporarily
-git pull --rebase       # update your branch on top of main
-```
-
-### Collaborating on the same repo
-
-- **Never push directly to `main`** — open a Pull Request.
-- **Pull before you push** to avoid rejected commits.
-- **Commit often** with clear messages.
-- **Resolve conflicts** locally: `git pull --rebase`, fix the files, then `git add` + `git rebase --continue`.
-- **Ask for a review** before merging — a second pair of eyes catches bugs fast.
-
----
-
-## ✅ Submission Checklist
-
-- [ ] Repository created and **public**
-- [ ] All team members added as **collaborators** and invitations accepted
-- [ ] `README.md` updated with project details, problem statement and solution
-- [ ] Team members listed under [Team Members](#-team-members-github-ids)
-- [ ] `requirements.txt` committed and project runs from a clean clone
-- [ ] Code pushed to `main` and the latest `main` builds successfully
-- [ ] Notebooks committed with **cleared outputs** (or use `nbstrip`)
-- [ ] `README` includes a demo screenshot / video link
-- [ ] Short project summary submitted on the hackathon portal
-
----
-
-## 📚 Resources
-
-| Resource | Link |
-| :--- | :--- |
-| 🔁 Git & collaboration handbook | [Git & Collaboration Handbook](../vtu-hc-guide-git-and-collaboration) |
-| ❓ Problem statements, solutions & terms | [Problem Statements, Solutions & Terms](../vtu-hc-guide-problem-and-solution) |
-| 📄 README writing guide | [README Guide & Template](../vtu-hc-guide-readme-template) |
-| ⚛️ Qiskit documentation | https://docs.quantum.ibm.com/ |
-| ⚛️ Qiskit Runtime & primitives | https://quantum.cloud.ibm.com/docs/ |
-| 🧪 Qiskit Aer simulator | https://docs.quantum.ibm.com/guides/simulator |
-| 💻 IBM Quantum Platform | https://quantum.cloud.ibm.com/ |
-| 🎓 Qiskit textbook | https://qiskit.qotlabs.org/learning/ |
-| 📋 GitHub Docs | https://docs.github.com/ |
-
----
-
-## 📄 License
-
-Released under the [MIT License](LICENSE). See `LICENSE` for details.
-
----
-
-<div align="center">
-
-**Qubix** · Team ID `VTU-QFF-HC-0177` · Tier `Online`
-· Built with ⚛️ Qiskit for the VTU-QFF Hackathon
-
-[⬆ Back to Top](#qubix)
-
-</div>
+**Qubix · VTU-QFF-HC-0177 · Online · VTU-Qiskit Fall Fest 2026**
