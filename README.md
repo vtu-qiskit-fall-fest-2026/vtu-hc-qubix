@@ -227,13 +227,9 @@ The Streamlit application's displayed SVM accuracy uses a separate data split an
 
 | Name                    | GitHub                                                             | Contribution                          |
 | ----------------------- | ------------------------------------------------------------------ | ------------------------------------- |
-| Madhuri Seetha Thondapu | [@madhuriseetha2006-web](https://github.com/madhuriseetha2006-web) | Project development and documentation |
-| Takkellapati Pooja      | Add GitHub username                                                | Add actual contribution               |
-| Rakurthi Harshitha      | Add GitHub username                                                | Add actual contribution               |
-
-
-
-Before final submission, replace the remaining placeholders with the team's confirmed names, GitHub usernames, and contributions. Do not publish guessed details.
+| Madhuri Seetha Thondapu | [@madhuriseetha2006-web](https://github.com/madhuriseetha2006-web) | Project development |
+| Takkellapati Pooja   | [@TakkellaptiPooja](https://github.com/TakkellapatiPooja) | Documentation & README |
+| Rakurthi Harshitha    | [@24b01a05e3](https://github.com/24b01a05e3) | Quantum ML, Testing |
 
 ## 11. Demo and Submission
 
