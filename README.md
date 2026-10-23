@@ -235,7 +235,7 @@ The Streamlit application's displayed SVM accuracy uses a separate data split an
 
 - **GitHub repository:** [https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-qubix](https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-qubix)
 - **Demo video:** https://youtu.be/4j_jRoJdP8M
-- **Hackathon submission:** https://ap.wps.com/cms/docs/d/cbCaemccg4MP80I4?platform=pc&refer=copylink
+- **Hackathon submission:** https://quc.vtu.ac.in/portal
 
 ## 12. References
 
